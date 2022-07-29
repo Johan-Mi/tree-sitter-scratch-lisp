@@ -1,0 +1,66 @@
+(include "src/basic-macros.scratch")
+(include "src/error-handling.scratch")
+(include "src/fields.scratch")
+(include "src/terminal.scratch")
+(include "src/heap.scratch")
+(include "src/vec.scratch")
+(include "src/fs.scratch")
+(include "src/interp.scratch")
+(include "src/process.scratch")
+(include "create-fs.scratch")
+
+(sprite "Stage"
+  (costumes "backdrop" "assets/backdrop.png"))
+
+(sprite "main"
+  (variables should-shutdown)
+  (lists stack)
+
+  (proc (when-flag-clicked)
+    (init)
+
+    (interp-spawn-from-path "/" "/bin/shell")
+    (interp-awaken (last-of stack))
+    (pop)
+
+    (until (= true should-shutdown)
+      (processes-step))
+
+    (shutdown))
+
+  (proc (init)
+    (:= should-shutdown false)
+    (stack-init)
+    (heap-init)
+    (term-init)
+    (create-fs)
+    (processes-init))
+
+  (proc (shutdown)
+    (variables i)
+    (println "Shutting down…")
+    (heap-deallocate fs-root)
+    (for i (vec.size process-table)
+      (heap-deallocate (vec.at process-table i)))
+    (heap-deallocate process-table)
+    (detect-memory-leaks)
+    (println "System has been shut down."))
+
+  (proc (stack-init)
+    (delete-all stack))
+
+  (proc (detect-memory-leaks)
+    (variables i leaked-blocks leaked-amount)
+    (:= leaked-blocks 0)
+    (:= leaked-amount 0)
+    (for i (length heap)
+      (unless (or (= 0 (!! heap-refcounts i))
+                  (= "Infinity" (!! heap-refcounts i)))
+        (+= leaked-blocks 1)
+        (+= leaked-amount (read i))))
+    (assert (= leaked-blocks 0)
+            (++ "Memory leak: leaked "
+                leaked-blocks
+                " blocks, "
+                leaked-amount
+                " elements"))))

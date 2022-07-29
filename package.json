@@ -1,0 +1,25 @@
+{
+  "name": "tree-sitter-scratch-lisp",
+  "version": "1.0.0",
+  "description": "Tree-sitter grammar for Scratch Lisp",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johan-Mi/tree-sitter-scratch-lisp.git"
+  },
+  "author": "Johan Milanov <johanmi@protonmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Johan-Mi/tree-sitter-scratch-lisp/issues"
+  },
+  "homepage": "https://github.com/Johan-Mi/tree-sitter-scratch-lisp#readme",
+  "dependencies": {
+    "nan": "^2.16.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.6"
+  }
+}
