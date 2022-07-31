@@ -29,11 +29,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "symbol"
+          "name": "number"
         },
         {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "symbol"
         },
         {
           "type": "SYMBOL",
@@ -49,30 +49,39 @@
         }
       ]
     },
-    "symbol": {
-      "type": "PATTERN",
-      "value": "[\\p{Alphabetic}!$%&*+\\-./:<=>?@^_~\\[\\]][\\p{Alphabetic}!$%&*+\\-./:<=>?@^_~\\[\\]\\d]*"
-    },
     "number": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "0x[0-9a-fA-F]+"
+          "type": "PREC",
+          "value": 1,
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[+-]?0x[\\da-fA-F]+"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[+-]?0b[01]+"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[+-]?0o[0-7]+"
+              }
+            ]
+          }
         },
         {
           "type": "PATTERN",
-          "value": "0b[01]+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "0o[0-7]+"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[+-]?(\\d*\\.\\d+)|(\\d+)([eE][+-]?\\d+)?"
+          "value": "[+-]?((\\d*\\.\\d+)|(\\d+(\\.\\d*)?))([eE][+-]?\\d+)?"
         }
       ]
+    },
+    "symbol": {
+      "type": "PATTERN",
+      "value": "[\\p{Alphabetic}!$%&*+\\-./:<=>?@^_~\\[\\]][\\p{Alphabetic}!$%&*+\\-./:<=>?@^_~\\[\\]\\d]*"
     },
     "string": {
       "type": "SEQ",
@@ -113,7 +122,7 @@
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "\\\\([btnfrv\"\\\\]|u\\{[0-9a-fA-F]{1,6}\\}|u[0-9a-fA-F]{4}|x[0-9a-fA-F]{2})"
+        "value": "\\\\([btnfrv\"\\\\]|u\\{[\\da-fA-F]{1,6}\\}|u[\\da-fA-F]{4}|x[\\da-fA-F]{2})"
       }
     },
     "unquote": {
