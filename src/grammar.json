@@ -53,25 +53,16 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "PREC",
-          "value": 1,
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "PATTERN",
-                "value": "[+-]?0x[\\da-fA-F]+"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[+-]?0b[01]+"
-              },
-              {
-                "type": "PATTERN",
-                "value": "[+-]?0o[0-7]+"
-              }
-            ]
-          }
+          "type": "PATTERN",
+          "value": "[+-]?0x[\\da-fA-F]+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[+-]?0b[01]+"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[+-]?0o[0-7]+"
         },
         {
           "type": "PATTERN",
