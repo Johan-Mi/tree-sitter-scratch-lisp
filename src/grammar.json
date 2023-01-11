@@ -1,5 +1,6 @@
 {
   "name": "scratchlisp",
+  "word": "symbol",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -30,6 +31,10 @@
         {
           "type": "SYMBOL",
           "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "boolean"
         },
         {
           "type": "SYMBOL",
@@ -67,6 +72,19 @@
         {
           "type": "PATTERN",
           "value": "[+-]?((\\d*\\.\\d+)|(\\d+(\\.\\d*)?))([eE][+-]?\\d+)?"
+        }
+      ]
+    },
+    "boolean": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
         }
       ]
     },

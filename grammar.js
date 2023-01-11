@@ -9,6 +9,8 @@ const escape_sequence =
 module.exports = grammar({
   name: "scratchlisp",
 
+  word: $ => $.symbol,
+
   extras: $ => [/\s/, $.comment],
 
   rules: {
@@ -16,9 +18,11 @@ module.exports = grammar({
 
     comment: $ => token(seq(";", /.*/)),
 
-    _expr: $ => choice($.number, $.symbol, $.string, $.unquote, $.node),
+    _expr: $ => choice($.number, $.boolean, $.symbol, $.string, $.unquote, $.node),
 
     number: $ => choice(hex_number, binary_number, octal_number, decimal),
+
+    boolean: $ => choice("true", "false"),
 
     symbol: $ =>
       /[\p{Alphabetic}!$%&*+\-./:<=>?@^_~\[\]][\p{Alphabetic}!$%&*+\-./:<=>?@^_~\[\]\d]*/,

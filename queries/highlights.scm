@@ -1,4 +1,5 @@
 (number) @constant.numeric
+(boolean) @constant.builtin.boolean
 (string) @string
 (escape_sequence) @constant.character.escape
 (comment) @comment
