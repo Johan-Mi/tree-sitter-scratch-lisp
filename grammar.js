@@ -30,11 +30,11 @@ module.exports = grammar({
     string: $ =>
       seq(
         '"',
-        repeat(choice($.escape_sequence, token.immediate(/[^"\\\n]/))),
+        repeat(choice($.escape_sequence, token.immediate(prec(1, /[^"\\\n]/)))),
         token.immediate('"')
       ),
 
-    escape_sequence: $ => token.immediate(escape_sequence),
+    escape_sequence: $ => token(prec(1, escape_sequence)),
 
     unquote: $ => seq(",", $._expr),
 

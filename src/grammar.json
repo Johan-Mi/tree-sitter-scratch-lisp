@@ -111,8 +111,12 @@
               {
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
-                  "type": "PATTERN",
-                  "value": "[^\"\\\\\\n]"
+                  "type": "PREC",
+                  "value": 1,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[^\"\\\\\\n]"
+                  }
                 }
               }
             ]
@@ -128,10 +132,14 @@
       ]
     },
     "escape_sequence": {
-      "type": "IMMEDIATE_TOKEN",
+      "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "\\\\([btnfrv\"\\\\]|u\\{[\\da-fA-F]{1,6}\\}|u[\\da-fA-F]{4}|x[\\da-fA-F]{2})"
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "\\\\([btnfrv\"\\\\]|u\\{[\\da-fA-F]{1,6}\\}|u[\\da-fA-F]{4}|x[\\da-fA-F]{2})"
+        }
       }
     },
     "unquote": {
